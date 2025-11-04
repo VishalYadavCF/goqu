@@ -1,7 +1,8 @@
 # Dialect
 
-Dialects allow goqu the build the correct SQL for each database. There are four dialects that come packaged with `goqu`
+Dialects allow goqu the build the correct SQL for each database. There are five dialects that come packaged with `goqu`
 
+* [clickhouse](./dialect/clickhouse/clickhouse.go) - `import _ "github.com/doug-martin/goqu/v9/dialect/clickhouse"`
 * [mysql](./dialect/mysql/mysql.go) - `import _ "github.com/doug-martin/goqu/v9/dialect/mysql"`
 * [postgres](./dialect/postgres/postgres.go) - `import _ "github.com/doug-martin/goqu/v9/dialect/postgres"`
 * [sqlite3](./dialect/sqlite3/sqlite3.go) - `import _ "github.com/doug-martin/goqu/v9/dialect/sqlite3"`
@@ -10,6 +11,34 @@ Dialects allow goqu the build the correct SQL for each database. There are four 
 **NOTE** Dialects work like drivers in go where they are not registered until you import the package.
 
 Below are examples for each dialect. Notice how the dialect is imported and then looked up using `goqu.Dialect`
+
+<a name="clickhouse"></a>
+### ClickHouse
+```go
+import (
+  "fmt"
+  "github.com/doug-martin/goqu/v9"
+  // import the dialect
+  _ "github.com/doug-martin/goqu/v9/dialect/clickhouse"
+)
+
+// look up the dialect
+dialect := goqu.Dialect("clickhouse")
+
+// use dialect.From to get a dataset to build your SQL
+ds := dialect.From("test").Where(goqu.Ex{"id": 10})
+sql, args, err := ds.ToSQL()
+if err != nil{
+  fmt.Println("An error occurred while generating the SQL", err.Error())
+}else{
+  fmt.Println(sql, args)
+}
+```
+
+Output:
+```
+SELECT * FROM `test` WHERE `id` = 10 []
+```
 
 <a name="postgres"></a>
 ### Postgres
