@@ -28,9 +28,9 @@ dialect := goqu.Dialect("clickhouse")
 // use dialect.From to get a dataset to build your SQL
 ds := dialect.From("test").Where(goqu.Ex{"id": 10})
 sql, args, err := ds.ToSQL()
-if err != nil{
+if err != nil {
   fmt.Println("An error occurred while generating the SQL", err.Error())
-}else{
+} else {
   fmt.Println(sql, args)
 }
 ```

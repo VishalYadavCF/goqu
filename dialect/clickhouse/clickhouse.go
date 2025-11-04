@@ -49,7 +49,8 @@ func DialectOptions() *goqu.SQLDialectOptions {
 	// Default values configuration
 	opts.DefaultValuesFragment = []byte("")
 
-	// Boolean representation in ClickHouse
+	// Boolean literal representation in ClickHouse (used for literal values, not IS TRUE/IS FALSE operators)
+	// ClickHouse uses 1 and 0 for boolean literals in INSERT/UPDATE statements
 	opts.True = []byte("1")
 	opts.False = []byte("0")
 
